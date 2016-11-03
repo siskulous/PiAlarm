@@ -1,6 +1,8 @@
 # PiAlarm
 A Raspberry Pi based alarm clock
 
+<b>My apologies to the original author of the PiAlarm that's already out there. Stupid me didn't think to look and make sure the name wasn't already in use. As soon as I figure out how I'll change the name of my project.</b><br><br>
+
 This project is very much a work in progress. Currently I have the files here running on my desktop and being set up to run
 daily via crontab.
 
@@ -27,4 +29,20 @@ daily via crontab.
 <i>Software:</i><br>
   Raspian<br>
   The RPi-GPIO library (preinstalled on the current version of Raspian)<br>
-  apt-get install python-smbus i2c-tools python-pygame libttspico-utils apache2 php5 mariadb-server python-sqlite php5-sqlite
+  apt-get install python-smbus i2c-tools mpg123 libttspico-utils apache2 php5 mariadb-server python-sqlite3 php5-sqlite
+  <br><br>
+  
+<i>Installation</i><br>
+  Eventually I'll get a script written to automate this. Run the following commands:
+  <ol>
+  <li>sudo mkdir /data && sudo chown www-data /data && cp alarms.db /data</li>
+  <li>sudo mkdir /opt/pialarm && sudo cp *.py /opt/pyalarm</li>
+  <li>tar -xf html.tar.gz && sudo cp -r html /var/www</li>
+  <li>sudo crontab -e</li>
+  </ol>
+  <p>
+  Scroll to the bottom of your crontab file and paste in the following two lines:<br><br>
+  55 * * * * python /opt/pialarm/fetchWeather.py<br>
+  * * * * * python /opt/pialarm/readAlarms.py<br>
+  </p>
+  
