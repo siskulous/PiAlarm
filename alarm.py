@@ -1,55 +1,63 @@
-###########################################################
-# This paste contains two files because the alarm clock
-# system it impliments requires both of them. The first 
-# file is the actual alarm script. It will grab all MP3s
-# from a given location and play them, one at a time, while
-# reading the weather forecast (obtained from NOAA via the
-# second script) in between each song.
-#
-# As of the time of this post I am manually setting crontab
-# entries to trigger the alarm each day. This is, therefore
-# a work in progress. At some point over the next week I'll
-# be adding a web-based configuration for the whole thing
-# with a database to hold the schedule.
-############################################################
-
-
-#imports
-import commands, thread, time, glob
+#!/usr/bin/python
+import thread, time, glob, ConfigParser
 from random import choice
 from time import sleep
-from pygame import mixer
+from os import system
+from RPi import GPIO
 
-#This function is the actual alarm clock
-def music(mins):
-	#The timing functions use seconds, I want the input in minutes. Make the adjustment.
+#Since we're using external commands we need to handle the volume increase externally
+#In the pygame version of this script pygame handles the volume, but unfortunately
+#pygame seems to not handle media files correctly with the raspi
+def vol(mins):
+	#Calculate the sleep time
 	secs=mins*60
-	start=time.time()
-	now=time.time()
-	songs=glob.glob("~/Music/*.mp3")	#Read the directory with the MP3s
-	mixer.init()	#Initiate the mixer
-	volume=0.1      #set the initial volume
-	#Play music until the specified time is up
-	while now-start<secs:
-		song=choice(songs) #Choose a song at random
-		mixer.music.load(song) #Load the song into Pygame's music interface
-		mixer.music.play() #start playing
-		mixer.music.queue("/tmp/weather.wav") #Queue up the weather after each song
-		while mixer.music.get_busy(): #Wait for the music to stop before loading another one.
-			if volume < 1.0: #Slowly fade the volume up over the course of 10 minutes.
-				volume=volume+0.01
-				mixer.music.set_volume(volume)
-			sleep(6)
+	sleepTime=secs//50
+	volume=50 #Volume starts at 50%, which is dang near inaudible on my Pi
+	while volume<=100: #Run until full volume
+                command="amixer sset PCM " + str(volume) + '%' #Build the command
+		print(command)
+                system(command)#Run the command
+                volume=volume+1 #Increase the volume for the next iteration
+                sleep(sleepTime) #Wait sleepTime seconds before raising volume again
+
+#The function that plays the music and weather
+def music(mins, lightPin):
+	secs=mins*60 #Calculate how many seconds to run
+	start=time.time()#Get starting time
+	now=time.time()#Initialize the now var for the loop
+	songs=glob.glob("/opt/alarms/*.mp3") #Get the list of songs
+	while now-start<secs: #Loop for specified time
+		song=choice(songs) #Pick a song
+		system('mpg123 "' + song + '"') #Play it with mplayer for maximum compatibility
+		system('aplay /tmp/weather.wav') #Play the weather
+		#The weather is grabbed hourly from NOAA by the fetchWeather.py script
+		now=time.time() #Get the current time so we know how long we've been running
+	GPIO.cleanup()
+
+#Turn on light
+def light(mins, lightPin):
+	#Since I'm testing this code on a PC ATM I need to comment out the GPIO stuff
+	#
+	#GPIO.setmode(GPIO.BOARD)
+	secs=mins*60 #Get the time to run
+	start=time.time() #Get the starting time
+	now=time.time() #Initialize the var for the loop
+	while now - start < secs: #Wait till it's time
 		now=time.time()
-
-#Unfinished and unimplemented function to turn on the light
-def light(mins):
-	secs=mins*60
-	start=time.time()
-	now=time.time()
-	while now - start < secs:
 		sleep(10)
-	#Turn on the GPIO pin controlling the light
+	GPIO.output(lightPin, False) #turn on the light
 
-music(60)
-#thread.start_new_thread(light,(5,))
+
+config=ConfigParser.ConfigParser()
+config.read("/opt/pialarm/alarmConfig")
+lightTime=config.getint("alarm","lightTime")
+lightPin=config.getint("alarm","lightPin")
+volTime=config.getint('alarm','volTime')
+musicTime=config.getint('alarm','musicTime')
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(lightPin, GPIO.OUT)
+
+thread.start_new_thread(vol,(volTime,))
+thread.start_new_thread(light,(lightTime, lightPin))
+music(musicTime, lightPin)
+

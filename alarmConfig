@@ -1,0 +1,6 @@
+[alarm]
+
+lightTime=5
+lightPin=36
+volTime=5
+musicTime=60
