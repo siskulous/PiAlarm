@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import json, requests, commands
 url='http://forecast.weather.gov/MapClick.php'
 params = dict(

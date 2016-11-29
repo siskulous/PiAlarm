@@ -25,15 +25,14 @@ def music(mins, lightPin):
 	secs=mins*60 #Calculate how many seconds to run
 	start=time.time()#Get starting time
 	now=time.time()#Initialize the now var for the loop
-	songs=glob.glob("/opt/alarms/*.mp3") #Get the list of songs
+	songs=glob.glob("/home/pi/music/*.mp3") #Get the list of songs
 	while now-start<secs: #Loop for specified time
 		song=choice(songs) #Pick a song
 		system('mpg123 "' + song + '"') #Play it with mplayer for maximum compatibility
 		system('aplay /tmp/weather.wav') #Play the weather
 		#The weather is grabbed hourly from NOAA by the fetchWeather.py script
 		now=time.time() #Get the current time so we know how long we've been running
-	GPIO.cleanup()
-
+	GPIO.output(lightPin,False)
 #Turn on light
 def light(mins, lightPin):
 	#Since I'm testing this code on a PC ATM I need to comment out the GPIO stuff
@@ -45,7 +44,7 @@ def light(mins, lightPin):
 	while now - start < secs: #Wait till it's time
 		now=time.time()
 		sleep(10)
-	GPIO.output(lightPin, False) #turn on the light
+	GPIO.output(lightPin, True) #turn on the light
 
 
 config=ConfigParser.ConfigParser()
