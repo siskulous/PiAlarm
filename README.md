@@ -61,7 +61,7 @@ A Raspberry Pi based alarm clock
   Install PiAwake. Eventually I'll get a script written to automate this. Run the following commands:
   <ol>
   <li>sudo mkdir /data && sudo chown www-data /data && cp alarms.db /data</li>
-  <li>sudo mkdir /opt/piawake && sudo cp *.py /opt/pyalarm</li>
+  <li>sudo mkdir /opt/piawake && sudo cp *.py /opt/piawake</li>
   <li>tar -xf html.tar.gz && sudo cp -r html /var/www</li>
   <li>sudo crontab -e</li>
   </ol>
