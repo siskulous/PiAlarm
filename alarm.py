@@ -48,7 +48,7 @@ def light(mins, lightPin):
 
 
 config=ConfigParser.ConfigParser()
-config.read("/opt/pialarm/alarmConfig")
+config.read("/opt/piawake/alarmConfig")
 lightTime=config.getint("alarm","lightTime")
 lightPin=config.getint("alarm","lightPin")
 volTime=config.getint('alarm','volTime')
