@@ -76,3 +76,4 @@ A Raspberry Pi based alarm clock
   
   </p>
   
+  If you're planning to use the white noise feature you'll need to copy your white noise file to /opt/piawake/whiteNoise.mp3. My white noise file may or may not subject to copyright (I can't remember where I got it several years ago). Since I don't know for sure I can't in good conscience distribute it with this package. There are plenty of white noise files in the public domain (NASA has some "space sounds" that make good ones). By default the white noise file will play for 4 hours or until the end of your mp3 file, whichever comes first. I put this limitation in because my white noise file is 10 hours long and I didn't want it to still be playing when the alarm went off.
