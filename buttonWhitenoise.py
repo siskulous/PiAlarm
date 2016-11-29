@@ -8,14 +8,17 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(31,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 mixer.init(44100)
 start=time.time()
-mixer.music.set_volume(70)
+config=ConfigParser.ConfigParser()
+config.read("/opt/piawake/alarmConfig")
+volume=config.getint("whiteNoise","volume")
+mixer.music.set_volume(volume)
 try:
 	while True:
 		if not GPIO.input(31):
 			sleep(0.5)
 			musicMode=True
 			while musicMode:
-				mixer.music.load("/opt/pialarm/whiteNoise.mp3")
+				mixer.music.load("/opt/piawake/whiteNoise.mp3")
 				mixer.music.play()
 				now=time.time()
 				while mixer.music.get_busy():
