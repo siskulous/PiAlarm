@@ -10,7 +10,7 @@ mixer.init(44100)
 start=time.time()
 config=ConfigParser.ConfigParser()
 config.read("/opt/piawake/alarmConfig")
-volume=config.getint("whiteNoise","volume")
+volume=config.getint("whitenoise","volume")
 mixer.music.set_volume(volume)
 try:
 	while True:
