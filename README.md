@@ -8,7 +8,7 @@ A Raspberry Pi based alarm clock
   Turn on a light after a specified number of minutes.<br>
   Read the day's weather forecast between songs<br>
   NO SNOOZE OR OFF! The music will play for as long as it's been configured to play (an hour by default). There's 
-    no way to turn it off and go back to sleep without SSHing into the PiAlarm<br>
+    no way to turn it off and go back to sleep without SSHing into the PiAwake<br>
   <br>
   <u>Other features</u><br>
   Web-based alarm scheduler.<br>
@@ -61,14 +61,14 @@ A Raspberry Pi based alarm clock
   Install PiAwake. Eventually I'll get a script written to automate this. Run the following commands:
   <ol>
   <li>sudo mkdir /data && sudo chown www-data /data && cp alarms.db /data</li>
-  <li>sudo mkdir /opt/pialarm && sudo cp *.py /opt/pyalarm</li>
+  <li>sudo mkdir /opt/piawake && sudo cp *.py /opt/pyalarm</li>
   <li>tar -xf html.tar.gz && sudo cp -r html /var/www</li>
   <li>sudo crontab -e</li>
   </ol>
   <p>
   Scroll to the bottom of your crontab file and paste in the following lines:<br><br>
-  55 * * * * python /opt/pialarm/fetchWeather.py<br>
-  * * * * * python /opt/pialarm/readAlarms.py<br>
+  55 * * * * python /opt/piawake/fetchWeather.py<br>
+  * * * * * python /opt/piawake/readAlarms.py<br>
   @reboot python /opt/piawake/buttonWeather.py<br>
   @reboot python /opt/piawake/buttonWhitenoise.py<br>
   @reboot python /opt/piawake/buttonMusic.py<br>
