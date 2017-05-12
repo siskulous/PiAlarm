@@ -21,8 +21,8 @@ A Raspberry Pi based alarm clock
   
   <br>
 <i>Hardware:</i><br>
-  Raspberry Pi 2 or later (Any would in theory work, but as I don't have one older than a 2 to test I'm saying 2 or later)<br>
-  Necessary accessories for said RasPi (power supply, etc)<br>
+  SBC with network - preferably wifi - Raspberry Pi compatible GPIO and audio output<br>
+  Necessary accessories for said SBC (power supply, etc)<br>
   A 16x2 I2C LCD display<br>
   A 5v class D amplifier and compatible speaker or speakers<br>
   An Arduino compatible single relay controller<br>
@@ -46,7 +46,9 @@ A Raspberry Pi based alarm clock
   Plug in your wifi card<br>
   <br>
   OPTIONAL<br>
-  Solder a power cord onto the prongs of a 5v 3amp phone charger with 2 USB ports. Solder a second pair of wires to the same prongs and use them to provide power to the light through the relay. Protect the connections with heat shrink tubes. Use one USB port to power the Pi and the other to power your amp. End result: one power cord coming out of you alarm clock powering all 3 devices inside it.<br>
+  Solder a power cord onto the prongs of a 5v 3amp phone charger with 2 USB ports. Alternatively you could pull power for the amp from the USB on the Pi. DO NOT try to power the amp from the GPIO. You'll only burn up your Pi.
+  
+ Solder a second pair of wires to the same prongs and use them to provide power to the light through the relay. Protect the connections with heat shrink tubes. Use one USB port to power the Pi and the other to power your amp. End result: one power cord coming out of you alarm clock powering all 3 devices inside it.<br>
   
   
 <br>
