@@ -16,7 +16,8 @@ A Raspberry Pi based alarm clock
   Read weather on demand<br>
   Turn light on/off on demand<br>
   Play user-provided white noise<br>
-  Display time and date
+  Display time and date<br>
+  Read the previous day's Pittsburg Penguins hockey scores (see hockey.py to change, comment out line 39 of alarm.py to disable)<br>
   
   <br>
 <i>Hardware:</i><br>
