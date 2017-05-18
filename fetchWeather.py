@@ -16,4 +16,4 @@ for i in range(0,3):
     weather+=data['time']['startPeriodName'][i] + ': '
     weather+=data['data']['text'][i]
 
-commands.getstatusoutput('pico2wave -w /tmp/weather.wav "' + weather + '"')
+commands.getstatusoutput('flite -o /tmp/weather.wav "' + weather + '"')
