@@ -30,8 +30,7 @@ def music(mins, lightPin):
 		song=choice(songs) #Pick a song
 		system('mpg123 "' + song + '"') #Play it with mplayer for maximum compatibility
 		sleep(1) #paus
-		system('pico2wave --wave=/tmp/time.wav "The current time is: `date "+%l %M %p"`"') #TTS the current time
-		system('aplay /tmp/time.wav') #say the current time
+		system('flite "The current time is: `date "+%l %M %p"`."') #TTS the current time
 		sleep(1) #pause
 		system('aplay /tmp/weather.wav') #Play the weather
 		#The weather is grabbed hourly from NOAA by the fetchWeather.py script
