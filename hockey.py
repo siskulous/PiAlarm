@@ -29,5 +29,5 @@ else:
 	summary=''
 
 
-commands.getstatusoutput('pico2wave -w /tmp/hockey.wav "' + summary + '"')
+commands.getstatusoutput('flite -o /tmp/hockey.wav "' + summary + '"')
 #print(summary)
