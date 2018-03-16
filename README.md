@@ -20,7 +20,7 @@ A Raspberry Pi based alarm clock
   Read the previous day's Pittsburg Penguins hockey scores (see hockey.py to change, comment out line 39 of alarm.py to disable)<br>
   
   <i>A note on the displays:</i><br>
-  Initially I used a 16x2 LCD display so I could show both the time and date. However, I found that with my glasses off - as they generally are when I'm trying to read the time from an alarm clock, usually at night - I couldn't read it. For this reason I switched to a larger 7 segment display. It only shows the time, not the date, but I can read it when I wake up in the middle of the night. I'm including the code for both, but the code for my 7 segment display is in C. I'm also including the binary from it. To compile this yourself you'll need both the Wiring Pi and the TM1637 in the TM1637.zip file.<br>
+  Initially I used a 16x2 LCD display so I could show both the time and date. However, I found that with my glasses off - as they generally are when I'm trying to read the time from an alarm clock, usually at night - I couldn't read it. For this reason I switched to a larger 7 segment display. It only shows the time, not the date, but I can read it when I wake up in the middle of the night. I'm including the code for both, but the code for my 7 segment display - mostly not my own code (see the comments in code7.c for the attribution)- is in C. As such I'm also including the binary of it. To compile this yourself you'll need both the Wiring Pi library and the TM1637 header in the TM1637.zip file.<br>
   <br>
 <i>Hardware:</i><br>
   SBC with network - preferably wifi - Raspberry Pi compatible GPIO and audio output<br>
@@ -72,6 +72,9 @@ A Raspberry Pi based alarm clock
   <ol>
   <li>sudo mkdir /data && sudo chown www-data /data && cp alarms.db /data</li>
   <li>sudo mkdir /opt/piawake && sudo cp *.py /opt/piawake</li>
+  <ol>
+    <li>If using the 7 segment display: sudo cp clock7 /opt/piawake</li>
+  </ol>
   <li>tar -xf html.tar.gz && sudo cp -r html /var/www</li>
   <li>sudo crontab -e</li>
   </ol>
