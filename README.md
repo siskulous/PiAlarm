@@ -19,21 +19,28 @@ A Raspberry Pi based alarm clock
   Display time and date<br>
   Read the previous day's Pittsburg Penguins hockey scores (see hockey.py to change, comment out line 39 of alarm.py to disable)<br>
   
+  <i>A note on the displays:</i><br>
+  Initially I used a 16x2 LCD display so I could show both the time and date. However, I found that with my glasses off - as they generally are when I'm trying to read the time from an alarm clock, usually at night - I couldn't read it. For this reason I switched to a larger 7 segment display. It only shows the time, not the date, but I can read it when I wake up in the middle of the night. I'm including the code for both, but the code for my 7 segment display is in C. I'm also including the binary from it. To compile this yourself you'll need both the Wiring Pi and the TM1637 in the TM1637.zip file.<br>
   <br>
 <i>Hardware:</i><br>
   SBC with network - preferably wifi - Raspberry Pi compatible GPIO and audio output<br>
   Necessary accessories for said SBC (power supply, etc)<br>
-  A 16x2 I2C LCD display<br>
+  A 16x2 I2C LCD display OR a TM1637 4x7 Segment LED display<br>
   A 5v class D amplifier and compatible speaker or speakers<br>
   An Arduino compatible single relay controller<br>
   <br>
   <u>Optional hardware<u><br>
   Momentary switches for extra functionality<br>
-  An LED display suitable to being powered by the GPIO (replaces the relay controller above)<br>
   <br>
   <u>Hardware setup</u><br>
-  NOTE: With the exception of the SDA and SCL pins the pin numbers I'm giving here are defaults and can be changed. If you change them you will need to edit the scripts to reflect your changes.<br>
-  Connect the I2C backpack to the GPIO (pin 3=SDA, pin 4=5v+, pin 5=SCL, pin 6=Ground)<br>
+  NOTE: With the exception of the SDA and SCL pins the pin numbers I'm giving here are defaults and can be changed. If you change them you will need to edit the scripts to reflect your changes.<br><br>
+  
+  If using the 16x2 display:<br>
+    Connect the I2C backpack to the GPIO (pin 3=SDA, pin 4=5v+, pin 5=SCL, pin 6=Ground)<br>
+  <br>
+  If using the 7 segment display:<br>
+    Connect the 7 segment display to GPIO (pin 3=DIO, pin 4=5v+, pin 5=Clk, pin 6=Ground)<br><br>
+  
   Connect the relay controller to the GPIO (pin 2=5v+, pin 34=Ground, pin 36=signal)<br>
   Connect all the buttons to a common ground on pin 39<br>
   Connect the button for the light to pin 37<br>
@@ -55,7 +62,7 @@ A Raspberry Pi based alarm clock
 <i>Software:</i><br>
   Raspian<br>
   The RPi-GPIO library (preinstalled on the current version of Raspian)<br>
-  apt-get install python-smbus i2c-tools mpg123 libttspico-utils apache2 php5 sqlite3 python-sqlite3 php5-sqlite
+  apt-get install python-smbus i2c-tools mpg123 libttspico-utils apache2 php5 sqlite3 python-sqlite3 php5-sqlite timidity
   <br><br>
   
 <i>Installation</i><br>
@@ -76,6 +83,16 @@ A Raspberry Pi based alarm clock
   @reboot python /opt/piawake/buttonWhitenoise.py<br>
   @reboot python /opt/piawake/buttonMusic.py<br>
   @reboot python /opt/piawake/buttonLight.py<br>
+  
+  </p>
+  <p>
+  If you're using the 16x2 display, paste in the following line:<br>
+  @reboot python /opt/piawake/clock.py
+  </p>
+  <p>
+  If you're using the 7 segment display, paste in the following line:<br>
+  @reboot /opt/piawake/clock7 9 8 27
+  
   
   </p>
   
