@@ -24,6 +24,7 @@ while True:
 		system('python /opt/pialarm/fetchWeather.py')
 	if not GPIO.input(13):
 		system('aplay /tmp/weather.wav')
+		system('aplay /tmp/hockey.wav')
 	sleep(0.2)
 
 	
